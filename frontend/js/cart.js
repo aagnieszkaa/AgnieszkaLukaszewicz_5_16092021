@@ -1,67 +1,63 @@
+class Cart {
+    productsInCart;
 
-   class CartLine{
-    constructor(jsonCartLine){
-        jsonCartLine && Object.assign(this, jsonCartLine);
-    }};
-
-    class Cart{
-        constructor(jsonCartLines){
-            jsonCartLines && Object.assign(this, jsonCartLines);
+    constructor(products) {
+        this.productsInCart = products;
+    }
+    addToCart(product) {
+        var added = false;
+        this.productsInCart.forEach(element => {
+            if (element.id == product.id) {
+                element.quantity += product.quantity;
+                added = true;
+            }
+        });
+        if (!added){
+            this.productsInCart.push(product);
         }
-        addToCart(cartLine){
-            /*check, si true accumulation de la quantite, sinon ajouter setItem(dans save et l'appeler)
-            pusher cartLine
-            else - this.jsonCartLines.push(cartLine);
-            */
-           
-        }
-        save(jsonCartLines){
-            let stringifiedTeddy = JSON.stringify(jsonCartLines);
-            localStorage.setItem("object", stringifiedTeddy);
-        }
-        /*
-        remove
-        check - verifier si ds local storage elle existe deja, return true ou false, 
-        id de l'article en parametre
-        boucle sur jsonCartLines._id, quand il le trouve == true
-        save(jsonstringify(jsonCartLines))
-        this.jsonCartLines - local Storage
-
-        */
+    }
+    save(){
+        let stringifiedProductsInCart = JSON.stringify(this.productsInCart);
+        localStorage.setItem("cart", stringifiedProductsInCart);
     };
+}
 
 function clickAddToCart(specificTeddy){
     let cartButton = document.getElementById('cartButton');
-    console.log(specificTeddy);
-      
     cartButton.addEventListener('click', function (e){
         e.preventDefault();
         let quantity = parseInt(document.getElementById('quantity').value);
 
-        let jsonCartLine = {
+        let jsonProductToAdd = {
             id : specificTeddy._id,
             name : specificTeddy.name,
             price : specificTeddy.price,
             quantity : quantity
         };
-        let cartLine = new CartLine(jsonCartLine);
-        let jsonCartLines = getCartLines();
-        let cart = new Cart(jsonCartLines);
-        cart.addToCart(cartLine);
+        let jsonProductsInCart = getProductsInCartJSON();
+        let cart = new Cart(jsonProductsInCart);
+        cart.addToCart(jsonProductToAdd);
+        cart.save();
+
+        document.querySelector(".confirmationAlert").innerHTML = 
+        `<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <h5 class="alert-heading">Vous avez ajouté un produit dans votre panier.</h5>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">Continuez les achats</span>
+        </button>
+        <button type="button" id="redirectionToCart">Panier</button>
+        </div>`
+        document.getElementById("redirectionToCart").addEventListener("click", function(){
+            window.location.assign("shoppingCart.html");
+        })
          })
 };
 
-function getCartLines(){
-    let listCartLines = localStorage.getItem("cart");
-    if (listCartLines !== null){
-        return JSON.parse(listCartLines);
+function getProductsInCartJSON(){
+    let productsInCart = localStorage.getItem("cart");
+    if (productsInCart !== null){
+        return JSON.parse(productsInCart);
     }else {
         return [];
-    } /**/  
+    } 
 }
-
-   /*let stringifiedTeddy = JSON.stringify(specificTeddy);
-    function setCartItem(stringifiedTeddy){ 
-        localStorage.setItem("object", stringifiedTeddy);
-    }*/
-

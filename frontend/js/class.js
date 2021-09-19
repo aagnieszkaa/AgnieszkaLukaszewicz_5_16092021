@@ -1,11 +1,14 @@
+function _getFormattedPrice (price){
+    let formattedPrice = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
+    return formattedPrice;
+}
+
 class Product{
     constructor(jsonProduct){
         jsonProduct && Object.assign(this, jsonProduct);
     }
     getFormattedPrice (){
-        let price = this.price;
-        let formattedPrice = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
-        return formattedPrice;
+        return _getFormattedPrice(this.price);
     }
 };
 
@@ -14,9 +17,7 @@ class SpecificProduct{
         jsonSpecificProduct && Object.assign(this, jsonSpecificProduct);
     }
     getFormattedPrice (){
-        let price = this.price;
-        let formattedPrice = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
-        return formattedPrice;
+        return _getFormattedPrice(this.price);
     }
     getColor (){
         let colors = this.colors;
@@ -35,3 +36,11 @@ class SpecificProduct{
     }
 };
 
+class CartProduct{
+    constructor(jsonCartProduct){
+        jsonCartProduct && Object.assign(this, jsonCartProduct);
+    }
+    getFormattedPrice (){
+        return _getFormattedPrice(this.price);
+    }
+}
