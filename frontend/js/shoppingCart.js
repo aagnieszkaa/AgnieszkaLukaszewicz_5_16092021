@@ -1,3 +1,4 @@
+   
 let cartProducts = getProductsInCartJSON();
 
 let div = document.querySelector(".ordered-products");
@@ -38,9 +39,8 @@ div.innerHTML += `
     `
 
 
-
+    
         document.getElementById('orderButton').addEventListener('click', function (e){
-            e.preventDefault();
             let contact = {
                     firstName : document.getElementById("prenom").value,
                     lastName : document.getElementById("nom").value,
@@ -84,20 +84,16 @@ div.innerHTML += `
             })
            .then(function(){
             let orderResult = JSON.parse(localStorage.getItem("orderResult"));
+            var valid = true;
+            for(let input of document.querySelectorAll("#form input")){
+                valid &= input.reportValidity();
+                if(!valid){
+                    break;
+                }
+            }
+            if(valid){
                 window.location = `confirmationPage.html?orderId=${orderResult.orderId}&orderPrice=${orderResult.orderPrice}`;
-            })
-            .then(function(){
-                /*let orderResult = JSON.parse(localStorage.getItem("orderResult"));
-                console.log(orderResult);*/
-                let confirmationMessage = document.querySelector(".cardConfirmation");
-                confirmationMessage.innerHTML =
-                `
-                    <div class="card-body">
-                    <h5 class="card-title">Merci pour votre commande numéro ${orderResult.orderId} !</h5>
-                    <p class="card-text">Le prix total de votre commande est de ${orderResult.orderPrice}.</p>
-                    </div>
-                `
-            })
+           }})
         })
             
         document.querySelector(".clearButton").addEventListener("click", function(){

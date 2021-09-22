@@ -25,7 +25,6 @@ class Cart {
 function clickAddToCart(specificTeddy){
     let cartButton = document.getElementById('cartButton');
     cartButton.addEventListener('click', function (e){
-        e.preventDefault();
         let quantity = parseInt(document.getElementById('quantity').value);
 
         let jsonProductToAdd = {
