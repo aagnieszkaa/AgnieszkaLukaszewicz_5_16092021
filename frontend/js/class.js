@@ -1,5 +1,5 @@
 function _getFormattedPrice (price){
-    let formattedPrice = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
+    let formattedPrice = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price / 100);
     return formattedPrice;
 }
 
@@ -29,7 +29,7 @@ class SpecificProduct{
     }
     getSumPrice (){
         let quantityButton = document.getElementById('quantity');
-        let pricePerOne = this.price; 
+        let pricePerOne = this.price / 100; 
         quantityButton.addEventListener('change', function(e){
             document.getElementById('totalPrice').innerHTML = 'Prix total : ' + Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(e.target.value * pricePerOne);
         });
