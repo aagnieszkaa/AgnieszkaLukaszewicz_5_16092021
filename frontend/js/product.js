@@ -1,13 +1,6 @@
 let params = (new URL(document.location)).searchParams;
 let id = params.get('id'); 
-console.log(id);
 
-/*fetch a faire pour recuperer les cards, 
-boucle sur les couleurs, select vide js dans innerHTML + 
-boucle sur le tableau appendChild dans select, 
-bouton ajoutez au panier
-liste deroulante de quantite ou input,
-localStorage pour le panier*/
 fetch("http://localhost:3000/api/teddies/" + id)
 .then(function(res) {
   if (res.ok) {
@@ -50,7 +43,6 @@ fetch("http://localhost:3000/api/teddies/" + id)
     specificTeddy.getColor();
     specificTeddy.getSumPrice();
     clickAddToCart(specificTeddy);
-
 }
 
 

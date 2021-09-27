@@ -27,6 +27,5 @@
                 `
             };
         }
-      /*<div class="imageContainer card-img-top border border-dark border-top-0">
-                    <img src="${teddy.imageUrl}" alt="Photo de jouet" class="image">
-                  </div>*/
+
+      
