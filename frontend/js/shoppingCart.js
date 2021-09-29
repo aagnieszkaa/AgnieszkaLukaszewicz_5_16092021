@@ -1,4 +1,3 @@
-   
 let cartProducts = getProductsInCartJSON();
 
 let div = document.querySelector(".ordered-products");
@@ -41,111 +40,55 @@ div.innerHTML += `
 
     
     document.getElementById('orderButton').addEventListener('click', function (e){
-
         e.preventDefault();
-
         var valid = true;
-
         for(let input of document.querySelectorAll("#form input")){
-
             valid &= input.reportValidity();
-
             if(!valid){
-
                 break;
-
             }
-
         }
-
         if(valid){
-
             let contact = {
-
                 firstName : document.getElementById("prenom").value,
-
                 lastName : document.getElementById("nom").value,
-
                 address : document.getElementById("adresse").value,
-
                 city : document.getElementById("ville").value,
-
                 email : document.getElementById("mail").value
-
             }
-
-                
-
             let products = [];
-
             getProductsInCartJSON().forEach(element => {
-
                 for(i=0; i < element.quantity; i++)
-
                 {
-
                     products.push(element.id);
-
                 }  
-
             }); /*Boucle sur la quantité pour ajouter autant des 
-
             fois l'id particulier qu'on a choisi la quantité*/
-
             let data = {
-
                 contact, products
-
             }
-
-            
-
             fetch("http://localhost:3000/api/teddies/order",
-
             {
-
                 method : "POST",
-
                 headers: {
-
                     'Accept': 'application/json', 
-
                     'Content-Type': 'application/json'
-
                 },              
-
                 body: JSON.stringify(data)
-
             }).then(response => response.json())
-
             .then(function(response){
-
                 let orderResult = {
-
                     orderId : response.orderId,
-
                     orderPrice : _getFormattedPrice(totalPrice)
-
                 }
-
-                
-
                 let stringifiedResult = JSON.stringify(orderResult);
-
                 localStorage.setItem("orderResult", stringifiedResult);  
-
             })
-
             .then(function(){
-
                 let orderResult = JSON.parse(localStorage.getItem("orderResult"));
-
                 window.location.href = `confirmationPage.html?orderId=${orderResult.orderId}&orderPrice=${orderResult.orderPrice}`;
-
             })
-
         }
-
     })
             
         document.querySelector(".clearButton").addEventListener("click", function(){
