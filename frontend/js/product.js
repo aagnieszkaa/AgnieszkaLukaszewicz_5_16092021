@@ -26,13 +26,13 @@ fetch("http://localhost:3000/api/teddies/" + id)
             </form>
             <form>
                 <label for="quantity">Quantité : </label>
-                <input type="number" id="quantity" name="quantity" min="1" max="10">
+                <input type="number" id="quantity" name="quantity" min="1" max="10" value="1">
             </form>
                 <ul>
                     <li>ID : ${specificTeddy._id}</li>
                     <li>Description : ${specificTeddy.description}</li>
                     <li>Prix : ${specificTeddy.getFormattedPrice()}</li>
-                    <li id="totalPrice">Prix total : </li>
+                    <li id="totalPrice">Prix total : ${specificTeddy.getFormattedPrice()}</li>
                 </ul>
             </p>
             <div class="d-flex justify-content-center">
@@ -43,6 +43,5 @@ fetch("http://localhost:3000/api/teddies/" + id)
     specificTeddy.getColor();
     specificTeddy.getSumPrice();
     clickAddToCart(specificTeddy);
+
 }
-
-

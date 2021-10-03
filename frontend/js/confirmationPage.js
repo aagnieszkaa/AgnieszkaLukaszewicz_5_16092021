@@ -9,3 +9,5 @@ confirmationMessage.innerHTML =
         <p class="card-text">Le prix total de votre commande est de ${price}.</p>
         </div>
     `
+
+    localStorage.removeItem("cart");

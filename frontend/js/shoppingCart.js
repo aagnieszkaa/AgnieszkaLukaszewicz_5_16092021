@@ -95,3 +95,15 @@ div.innerHTML += `
             localStorage.removeItem("cart");
             window.location.reload(true);
         });
+
+        function showForm(){
+            let productsInCart = localStorage.getItem("cart");
+            if (productsInCart == null){
+                document.getElementById('form').style.display = "none";
+            } else 
+            {
+                document.getElementById('form').style.display = "block";
+            }
+        };
+
+        showForm();

@@ -26,29 +26,31 @@ function clickAddToCart(specificTeddy){
     let cartButton = document.getElementById('cartButton');
     cartButton.addEventListener('click', function (e){
         let quantity = parseInt(document.getElementById('quantity').value);
+        if(quantity !== 0){
+            let jsonProductToAdd = {
+                id : specificTeddy._id,
+                name : specificTeddy.name,
+                price : specificTeddy.price,
+                quantity : quantity
+            };
+            let jsonProductsInCart = getProductsInCartJSON();
+            let cart = new Cart(jsonProductsInCart);
+            cart.addToCart(jsonProductToAdd);
+            cart.save();
+    
+            document.querySelector(".confirmationAlert").innerHTML = 
+            `<div class="alert alert-success alert-dismissible fade show" role="alert">
+            <h5 class="alert-heading">Vous avez ajouté un produit dans votre panier.</h5>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+               <span aria-hidden="true">Continuez les achats</span>
+            </button>
+            <button type="button" id="redirectionToCart">Panier</button>
+            </div>`
+            document.getElementById("redirectionToCart").addEventListener("click", function(){
+                window.location.assign("shoppingCart.html");
+            })  
+        }
 
-        let jsonProductToAdd = {
-            id : specificTeddy._id,
-            name : specificTeddy.name,
-            price : specificTeddy.price,
-            quantity : quantity
-        };
-        let jsonProductsInCart = getProductsInCartJSON();
-        let cart = new Cart(jsonProductsInCart);
-        cart.addToCart(jsonProductToAdd);
-        cart.save();
-
-        document.querySelector(".confirmationAlert").innerHTML = 
-        `<div class="alert alert-success alert-dismissible fade show" role="alert">
-        <h5 class="alert-heading">Vous avez ajouté un produit dans votre panier.</h5>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-           <span aria-hidden="true">Continuez les achats</span>
-        </button>
-        <button type="button" id="redirectionToCart">Panier</button>
-        </div>`
-        document.getElementById("redirectionToCart").addEventListener("click", function(){
-            window.location.assign("shoppingCart.html");
-        })
          })
 };
 
